@@ -28,6 +28,9 @@ class BattleCursor extends Phaser.GameObjects.Sprite { //lexical declaration err
 class PartyState extends State{
     enter(scene, cursor){
         console.log("party state enter")
+        scene.charMenuBox.x = -500
+        scene.charMenuBox.y = 0
+        cursor.setFrame(0)
         cursor.x = scene.cursorStartX
         cursor.y = scene.cursorStartY
     }
@@ -39,11 +42,11 @@ class PartyState extends State{
         if (Phaser.Input.Keyboard.JustDown(keyLEFT) && cursor.charPos > 0) {
             console.log("left input")
             //console.log(this.x)
-            cursor.x = cursor.x - scene.cursorMoveInterval
+            cursor.x = cursor.x - scene.cursorPartyMoveInterval
             cursor.charPos--
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT) && cursor.charPos < 2)   {
-            cursor.x = cursor.x + scene.cursorMoveInterval
+            cursor.x = cursor.x + scene.cursorPartyMoveInterval
             cursor.charPos++
         }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
@@ -56,8 +59,31 @@ class PartyState extends State{
 class CharBattleState extends State {
     enter(scene, cursor){
         console.log("CharBattleState enter")
+        scene.charMenuBox.x = scene.charMenuX
+        scene.charMenuBox.y = scene.charMenuY
         cursor.x = scene.cursorMenuX
         cursor.y = scene.cursorMenuY
-        cursor.texture = 'cursorMenu'
+        console.log(cursor.depth)
+        console.log((scene.charMenuBox).depth)
+        cursor.setDepth(scene.charMenuBox.displayHeight+1)
+        //console.log(cursor.texture)
+        //cursor.texture = 'cursorMenu'
+        cursor.setFrame(1)
+    }
+    
+    execute(scene, cursor){
+        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 0){
+            console.log("up input")
+            cursor.y = cursor.y - scene.cursorMenuMoveInterval
+            cursor.menuPos--
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyDOWN) && cursor.menuPos < 2){
+            console.log("down input")
+            cursor.y = cursor.y + scene.cursorMenuMoveInterval
+            cursor.menuPos++
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyBACK)){
+            this.stateMachine.transition('party')
+        }
     }
 }

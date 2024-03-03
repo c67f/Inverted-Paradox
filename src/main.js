@@ -17,5 +17,5 @@ let game = new Phaser.Game(config)
 let { width, height } = game.config
 console.log("test")
 //reserve keyboard bindings
-let keyLEFT, keyRIGHT, keyDOWN, keyUP, keySPACE
+let keyLEFT, keyRIGHT, keyDOWN, keyUP, keySPACE, keyBACK
 let itemsNum, gumballAtkNum, gumballMgNum, anaisAtkNum, anaisMgNum, anaisSciNum, darwinAtkNum, darwinMgNum

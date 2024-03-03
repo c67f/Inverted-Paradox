@@ -12,8 +12,14 @@ class Load extends Phaser.Scene {
         this.load.image('gumballCombat', './assets/GumballCombatSprite.png')
         this.load.image('anaisCombat', './assets/AnaisCombatSprite.png')
         this.load.image('darwinCombat', './assets/DarwinCombatSprite.png')
-        this.load.image('cursorMenu', './assets/CursorMenu.png'),
-        this.load.image('cursorParty', './assets/CursorParty.png')
+        //this.load.image('cursorMenu', './assets/CursorMenu.png'),
+        //this.load.image('cursorParty', './assets/CursorParty.png')
+        
+        this.load.spritesheet('cursor', './assets/CursorSpritesheet.png', {
+            frameWidth: 62,
+            frameHeight: 36
+        })
+
         this.load.image('menuBox9Slice', './assets/MenuBox9Slice.png')
         this.load.image('combatMenuBox9Slice', './assets/CombatMenuBox9Slice.png')
 
@@ -26,6 +32,8 @@ class Load extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN)
+
+        //this.anims.create
 
         //this.add.bitmapText(200, 200, 'RPG_font', 'test', 32).setOrigin(0.5)
         window:localStorage ? console.log('Local storage supported') : console.log('Local storage not supported')
