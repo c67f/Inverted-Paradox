@@ -31,7 +31,7 @@ class PartyState extends State{
         scene.charMenuBox.x = -500
         scene.charMenuBox.y = 0
         cursor.setFrame(0)
-        cursor.x = scene.cursorStartX
+        cursor.x = scene.cursorStartX - ((2 - cursor.charPos) * scene.cursorPartyMoveInterval)
         cursor.y = scene.cursorStartY
     }
     
