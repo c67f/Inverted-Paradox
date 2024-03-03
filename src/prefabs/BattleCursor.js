@@ -36,15 +36,15 @@ class PartyState extends State{
         //console.log("party state execute")
         //const { left, right, space } = scene.keys
         //console.log(cursor.pos)
-        if (Phaser.Input.Keyboard.JustDown(keyLEFT) && cursor.pos > 0) {
+        if (Phaser.Input.Keyboard.JustDown(keyLEFT) && cursor.charPos > 0) {
             console.log("left input")
             //console.log(this.x)
             cursor.x = cursor.x - scene.cursorMoveInterval
-            cursor.pos--
+            cursor.charPos--
         }
-        if (Phaser.Input.Keyboard.JustDown(keyRIGHT) && cursor.pos < 2)   {
+        if (Phaser.Input.Keyboard.JustDown(keyRIGHT) && cursor.charPos < 2)   {
             cursor.x = cursor.x + scene.cursorMoveInterval
-            cursor.pos++
+            cursor.charPos++
         }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.stateMachine.transition('charBattle')
