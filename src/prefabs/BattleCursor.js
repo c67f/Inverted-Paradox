@@ -9,19 +9,20 @@ class BattleCursor extends Phaser.GameObjects.Sprite { //lexical declaration err
 
         //intitialize finite state machine
         scene.cursorFSM = new StateMachine('party', {
+            enemyTurn: new EnemyTurnState(),
             party: new PartyState(),
-            charBattle: new CharBattleState()/*,
-            gumballAtks: new GumballAtksState(),
-            anaisAtks: new AnaisAtksState(),
-            darwinAtks: new DarwinAtksState(),
+            charBattle: new CharBattleState(),
+            //gumballAtks: new GumballAtksState(),
+            //anaisAtks: new AnaisAtksState(),
+            //darwinAtks: new DarwinAtksState(),
             gumballMg: new GumballMagicState(),
-            anaisMg: new AnaisMagicState(),
-            darwinMG: new DarwinMagicState(),
-            itemsBattle: new ItemsBattleState*/
+            //anaisMg: new AnaisMagicState(),
+            //darwinMg: new DarwinMagicState(),
+            //itemsBattle: new ItemsBattleState
         }, [scene, this])
 
     }
-
+    
     
 }
 
@@ -30,6 +31,8 @@ class PartyState extends State{
         console.log("party state enter")
         scene.charMenuBox.x = -500
         scene.charMenuBox.y = 0
+        scene.gMagicMenuBox.x = -500
+        scene.gMagicMenuBox.y = 0
         cursor.setFrame(0)
         cursor.x = scene.cursorStartX - ((2 - cursor.charPos) * scene.cursorPartyMoveInterval)
         cursor.y = scene.cursorStartY
@@ -50,6 +53,7 @@ class PartyState extends State{
             cursor.charPos++
         }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            this.currentChar = this.charPos
             this.stateMachine.transition('charBattle')
             return
         }
@@ -59,15 +63,19 @@ class PartyState extends State{
 class CharBattleState extends State {
     enter(scene, cursor){
         console.log("CharBattleState enter")
+        scene.gMagicMenuBox.x = -500
+        scene.gMagicMenuBox.y = 0
         scene.charMenuBox.x = scene.charMenuX
         scene.charMenuBox.y = scene.charMenuY
         cursor.x = scene.cursorMenuX
         cursor.y = scene.cursorMenuY
-        console.log(cursor.depth)
-        console.log((scene.charMenuBox).depth)
+        //console.log(cursor.depth)
+        //console.log((scene.charMenuBox).depth)
         cursor.setDepth(scene.charMenuBox.displayHeight+1)
         //console.log(cursor.texture)
         //cursor.texture = 'cursorMenu'
+        cursor.menuPos = 0
+        //console.log(this.menuPos)
         cursor.setFrame(1)
     }
     
@@ -76,13 +84,77 @@ class CharBattleState extends State {
             console.log("up input")
             cursor.y = cursor.y - scene.cursorMenuMoveInterval
             cursor.menuPos--
+            //console.log(cursor.menu)
         }
         if(Phaser.Input.Keyboard.JustDown(keyDOWN) && cursor.menuPos < 2){
             console.log("down input")
             cursor.y = cursor.y + scene.cursorMenuMoveInterval
             cursor.menuPos++
         }
+        if(Phaser.Input.Keyboard.JustDown(keySPACE)){
+            if (cursor.currentChar == 2) {
+                if (cursor.menuPos == 0){
+                    this.stateMachine.transition('gumballMg')
+                }
+            }
+        }
         if(Phaser.Input.Keyboard.JustDown(keyBACK)){
+            this.stateMachine.transition('party')
+        }
+    }
+}
+
+class GumballMagicState extends State {
+    enter(scene, cursor) {
+        console.log("GumballMagicState enter")
+        scene.gMagicMenuBox.x = scene.charMenuX+50
+        scene.gMagicMenuBox.y = scene.charMenuY+50
+        cursor.x = scene.cursorMenuX+50
+        cursor.y = scene.cursorMenuY+50
+        cursor.menuPos = 0
+    }
+
+    execute(scene, cursor){
+        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 0){
+            console.log("up input")
+            cursor.y = cursor.y - scene.cursorMenuMoveInterval
+            cursor.menuPos--
+            //console.log(cursor.menu)
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyDOWN) && cursor.menuPos < scene.gMagicNum){
+            console.log("down input")
+            cursor.y = cursor.y + scene.cursorMenuMoveInterval
+            cursor.menuPos++
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyBACK)){
+            this.stateMachine.transition('charBattle')
+        }
+        if(Phaser.Input.Keyboard.JustDown(keySPACE)){
+            switch(cursor.menuPos) {
+                case 0:
+                    console.log("gMagic1")
+                    scene.gMagic1()
+                    this.stateMachine.transition('enemyTurn')
+                    break
+            }    
+        }
+
+    }    
+}
+
+class EnemyTurnState extends State {
+    enter(scene, cursor) {
+        console.log("EnemyTurnState enter")
+        scene.charMenuBox.x = -500
+        scene.charMenuBox.y = 0
+        scene.gMagicMenuBox.x = -500
+        scene.gMagicMenuBox.y = 0
+        cursor.x = -500
+        cursor.y = 0
+    }
+    
+    execute(scene, cursor){
+        if(scene.playerTurn == true){
             this.stateMachine.transition('party')
         }
     }
