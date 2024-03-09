@@ -28,6 +28,8 @@ class Load extends Phaser.Scene {
         this.load.image('menuBox9Slice', './assets/MenuBox9Slice.png')
         this.load.image('combatMenuBox9Slice', './assets/CombatMenuBox9Slice.png')
 
+        this.load.image('bananaPeel', './assets/BananaPeel.png')
+
         this.load.image('victory', './assets/VictoryImage.png')
 
         this.load.bitmapFont('pixelmix_bold_font', 'font/pixelmix.png', 'font/pixelmix.xml')

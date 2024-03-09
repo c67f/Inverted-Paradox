@@ -18,8 +18,8 @@ class BattleCursor extends Phaser.GameObjects.Sprite { //lexical declaration err
             gumballMg: new GumballMagicState(),
             //anaisMg: new AnaisMagicState(),
             anaisSci: new AnaisSciState(),
-            darwinMg: new DarwinMagicState()//,
-            //itemsBattle: new ItemsBattleState
+            darwinMg: new DarwinMagicState(),
+            itemsBattle: new ItemsBattleState
         }, [scene, this])
 
     }
@@ -34,6 +34,8 @@ class PartyState extends State{
         scene.charMenuBox.y = 0
         scene.gMagicMenuBox.x = -500
         scene.gMagicMenuBox.y = 0
+        scene.itemMenuBox.x = -500
+        scene.itemMenuBox.y = 0
         cursor.setFrame(0)
         cursor.x = scene.cursorStartX - ((2 - cursor.charPos) * scene.cursorPartyMoveInterval)
         cursor.y = scene.cursorStartY
@@ -54,9 +56,11 @@ class PartyState extends State{
             cursor.charPos++
         }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            cursor.currentChar = cursor.charPos
-            this.stateMachine.transition('charBattle')
-            return
+            if (!(cursor.charPos === 0 && scene.dHP <= 0) && !(cursor.charPos === 1 && scene.aHP <=0) && !(cursor.charPos === 2 && scene.gHP <=0)){
+                cursor.currentChar = cursor.charPos
+                this.stateMachine.transition('charBattle')
+                return
+            }
         }
     }
 }
@@ -70,6 +74,8 @@ class CharBattleState extends State {
         scene.aSciMenuBox.y = 0
         scene.dMagicMenuBox.x = -500
         scene.dMagicMenuBox.y = 0
+        scene.itemMenuBox.x = -500
+        scene.itemMenuBox.y = 0
 
         scene.charMenuBox.x = scene.charMenuX
         scene.charMenuBox.y = scene.charMenuY
@@ -98,19 +104,20 @@ class CharBattleState extends State {
             cursor.menuPos++
         }
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
-            if (cursor.currentChar == 2) {
+            if (cursor.menuPos == 1){
+                this.stateMachine.transition('itemsBattle')
+            } else if (cursor.currentChar == 2) {
+                console.log("gumbalMg select")
                 if (cursor.menuPos == 0){
                     this.stateMachine.transition('gumballMg')
                 }
                 
-            }
-            if(cursor.currentChar == 1){
-                console.log('anaisSci select')
+            } else if(cursor.currentChar == 1){
+                //console.log('anaisSci select')
                 if (cursor.menuPos == 2){
                     this.stateMachine.transition('anaisSci')
                 }
-            }
-            if(cursor.currentChar == 0){
+            }else if(cursor.currentChar == 0){
                 if (cursor.menuPos == 0){
                     this.stateMachine.transition('darwinMg')
                 }
@@ -247,6 +254,8 @@ class EnemyTurnState extends State {
         scene.aSciMenuBox.y = 0
         scene.dMagicMenuBox.x = -500
         scene.dMagicMenuBox.y = 0
+        scene.itemMenuBox.x = -500
+        scene.itemMenuBox.y = 0
         cursor.x = -500
         cursor.y = 0
     }
@@ -254,6 +263,31 @@ class EnemyTurnState extends State {
     execute(scene, cursor){
         if(scene.playerTurn == true){
             this.stateMachine.transition('party')
+        }
+    }
+}
+
+class ItemsBattleState extends State {
+    enter(scene, cursor){
+        console.log("ItemsBattleState enter")
+        scene.itemMenuBox.x = scene.charMenuX + 50
+        scene.itemMenuBox.y = scene.charMenuY+50
+        cursor.x = scene.cursorMenuX+50
+        cursor.y = scene.cursorMenuY+50
+        cursor.menuPos = 0
+    }
+
+    execute(scene, cursor){
+        if(Phaser.Input.Keyboard.JustDown(keyBACK)){
+            this.stateMachine.transition('charBattle')
+        } else if(Phaser.Input.Keyboard.JustDown(keySPACE)){
+            switch(cursor.menuPos) {
+                case 0:
+                    console.log("bananaPeel")
+                    scene.bananaPeel()
+                    this.stateMachine.transition('enemyTurn')
+                    break
+            }    
         }
     }
 }

@@ -105,9 +105,14 @@ class Battle extends Phaser.Scene {
 
         this.dMagicMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
         this.dMagicMenuBox.create('HEAL 1')
+
+        this.itemMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
+        this.itemMenuBox.create('BANANA')
         //this.charMenuBox.create(this)
         //this.TestBox = new MenuBox(this, width/18, height/10, 'menuBox9Slice', 0, 500, 150, 5, 5, 5, 5).setOrigin(0)
         //this.TestBox = new MenuBox(this, width*0.8, height*0.8, 'combatMenuBox9Slice', 0, 150, 150, 5, 5, 13, 5)
+
+        this.bananaPeelSprite = this.add.sprite(0, -500, 'bananaPeel')
        
         this.music = this.sound.add('battle')
         this.music.setLoop(true)
@@ -125,6 +130,7 @@ class Battle extends Phaser.Scene {
         this.gMagicMenuBox.update()
         this.aSciMenuBox.update()
         this.dMagicMenuBox.update()
+        this.itemMenuBox.update()
         //console.log(this.playerTurn)
 
         if (this.playerTurn == false && this.enemyTurn == false){
@@ -166,14 +172,32 @@ class Battle extends Phaser.Scene {
     }
 
     dMagic1(){
-        if (this.aHP < 500){
+        if (this.aHP < 500 && this.aHP > 0){
             this.aHP += (this.dMagic*4)
         }
-        if (this.aHP < 500){
+        if (this.dHP < 500 && this.dHP > 0){
             this.dHP += (this.dMagic*4)
         }
-        if (this.aHP < 500){
+        if (this.gHP < 500 && this.gHP > 0){
             this.gHP += (this.dMagic*4)
+        }
+        if (this.aHP > 500){
+            this.aHP = 500
+        }
+        if (this.dHP > 500){
+            this.dHP = 500
+        }
+        if (this.gHP > 500){
+            this.gHP = 500
+        }
+        this.playerTurn = false
+    }
+
+    bananaPeel(){
+        let randNum = Phaser.Math.Between(1, 1)
+        if (randNum === 1){
+            console.log('stunned!')
+            this.enemy.stunned = true
         }
         this.playerTurn = false
     }

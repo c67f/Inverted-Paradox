@@ -5,6 +5,8 @@ class LeslieEnemy extends Phaser.GameObjects.Sprite { //lexical declaration erro
 
         this.attacked = false
         this.leafDelayInterval = 400
+        this.stunned = false
+        this.stunCounter = 0
 
         console.log('Leslie monster created')
         this.HP = 1500
@@ -22,7 +24,8 @@ class LeslieEnemy extends Phaser.GameObjects.Sprite { //lexical declaration erro
             offTurn: new offTurnState(),
             atkDecide: new atkDecideState(),
             leafAtk: new leafAtkState(),
-            vineAtk: new vineAtkState()
+            vineAtk: new vineAtkState(),
+            stunned: new stunnedState()
             //grappleAtk: new grappleAtkState()
         }, [scene, this])
 
@@ -36,8 +39,37 @@ class offTurnState extends State {
     }
 
     execute(scene, leslie) {
-        if (scene.enemyTurn === true){
+        if (scene.enemyTurn === true && leslie.stunned === false){
             this.stateMachine.transition('atkDecide')
+        } else if (scene.enemyTurn === true && leslie.stunned === true){
+            this.stateMachine.transition('stunned')
+        }
+    }
+}
+
+class stunnedState extends State {
+    enter(scene, leslie) {
+        if (leslie.stunCounter === 0){
+            scene.bananaPeelSprite.x = 800
+            scene.bananaPeelSprite.y = 600
+        }
+        console.log("stunnedState enter")
+        leslie.attacked = false
+        leslie.stunCounter++
+        if (leslie.stunCounter > 1){
+            leslie.stunned = false
+            leslie.stunCounter = 0
+            scene.bananaPeelSprite.x = -500
+            scene.bananaPeelSprite.y = 0
+        }
+    }
+
+    execute(scene, leslie){
+        if (leslie.attacked === false){
+            leslie.attacked = true
+            scene.time.delayedCall(2000, () => {
+                this.stateMachine.transition('offTurn')
+            }, null, this)
         }
     }
 }
