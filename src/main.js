@@ -4,7 +4,7 @@ let config = {
     type:Phaser.AUTO,
     width: 1080,
     height: 720,
-    scene: [ Load, Battle ],
+    scene: [ Load, Battle, Victory ],
     physics: {
       default: 'arcade',
       arcade: {

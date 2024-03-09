@@ -82,9 +82,11 @@ class leafAtkState extends State{
                 case 0:
                     console.log("targeting Darwin")
                     leslie.dmg = leslie.atk * leslie.dmgRandMod * leslie.leafAtkBase
-
-                    scene.gHP = scene.gHP - leslie.dmg
-                    scene.time.delayedCall(les.leafDelayInterval, () => {
+                
+                    scene.time.delayedCall(leslie.leafDelayInterval, () => {
+                        scene.gHP = scene.gHP - leslie.dmg
+                    }, null, this)
+                    scene.time.delayedCall(leslie.leafDelayInterval, () => {
                         scene.gHP = scene.gHP - leslie.dmg
                     }, null, this)
                     scene.time.delayedCall(leslie.leafDelayInterval, () => {

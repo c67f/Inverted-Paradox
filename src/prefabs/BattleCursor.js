@@ -54,7 +54,7 @@ class PartyState extends State{
             cursor.charPos++
         }
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.currentChar = this.charPos
+            cursor.currentChar = cursor.charPos
             this.stateMachine.transition('charBattle')
             return
         }
@@ -66,6 +66,11 @@ class CharBattleState extends State {
         console.log("CharBattleState enter")
         scene.gMagicMenuBox.x = -500
         scene.gMagicMenuBox.y = 0
+        scene.aSciMenuBox.x = -500
+        scene.aSciMenuBox.y = 0
+        scene.dMagicMenuBox.x = -500
+        scene.dMagicMenuBox.y = 0
+
         scene.charMenuBox.x = scene.charMenuX
         scene.charMenuBox.y = scene.charMenuY
         cursor.x = scene.cursorMenuX
@@ -96,6 +101,18 @@ class CharBattleState extends State {
             if (cursor.currentChar == 2) {
                 if (cursor.menuPos == 0){
                     this.stateMachine.transition('gumballMg')
+                }
+                
+            }
+            if(cursor.currentChar == 1){
+                console.log('anaisSci select')
+                if (cursor.menuPos == 2){
+                    this.stateMachine.transition('anaisSci')
+                }
+            }
+            if(cursor.currentChar == 0){
+                if (cursor.menuPos == 0){
+                    this.stateMachine.transition('darwinMg')
                 }
             }
         }
@@ -181,7 +198,7 @@ class AnaisSciState extends State {
     }    
 }
 
-class DarwinMagic extends State {
+class DarwinMagicState extends State {
     enter(scene, cursor) {
         console.log("GumballMagicState enter")
         scene.dMagicMenuBox.x = scene.charMenuX+50
@@ -226,6 +243,10 @@ class EnemyTurnState extends State {
         scene.charMenuBox.y = 0
         scene.gMagicMenuBox.x = -500
         scene.gMagicMenuBox.y = 0
+        scene.aSciMenuBox.x = -500
+        scene.aSciMenuBox.y = 0
+        scene.dMagicMenuBox.x = -500
+        scene.dMagicMenuBox.y = 0
         cursor.x = -500
         cursor.y = 0
     }

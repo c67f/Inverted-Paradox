@@ -98,10 +98,10 @@ class Battle extends Phaser.Scene {
         this.charMenuBox.create('MAGIC', 'ITEM', 'SCIENCE')
 
         this.gMagicMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
-        this.gMagicMenuBox.create('FIRE 1')
+        this.gMagicMenuBox.create('ELEC 1')
 
         this.aSciMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
-        this.aSciMenuBox.create('EXPMIXTURE')
+        this.aSciMenuBox.create('BLASTMIX')
 
         this.dMagicMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
         this.dMagicMenuBox.create('HEAL 1')
@@ -109,7 +109,9 @@ class Battle extends Phaser.Scene {
         //this.TestBox = new MenuBox(this, width/18, height/10, 'menuBox9Slice', 0, 500, 150, 5, 5, 5, 5).setOrigin(0)
         //this.TestBox = new MenuBox(this, width*0.8, height*0.8, 'combatMenuBox9Slice', 0, 150, 150, 5, 5, 13, 5)
        
-
+        this.music = this.sound.add('battle')
+        this.music.setLoop(true)
+        this.music.play()
         
     }
 
@@ -121,11 +123,22 @@ class Battle extends Phaser.Scene {
         this.leslieFSM.step()
         this.charMenuBox.update() //need to call the update method so it is run in this update method - update in the prefabs might not have any inherent definition?
         this.gMagicMenuBox.update()
+        this.aSciMenuBox.update()
+        this.dMagicMenuBox.update()
         //console.log(this.playerTurn)
 
         if (this.playerTurn == false && this.enemyTurn == false){
             this.enemyTurn = true
             this.enemyTurnFunc()
+        }
+
+        if (this.enemy.HP <= 0){
+            this.music.stop()
+            this.scene.start('victoryScene')
+        }
+        if (this.aHP <= 0 && this.gHP <=0 && this.dHP <= 0){
+            this.music.stop()
+            this.scene.start('loadScene')
         }
     }
 
@@ -139,9 +152,29 @@ class Battle extends Phaser.Scene {
     }
 
     gMagic1(){
-        this.enemy.HP -= (this.gMagic*2)
+        this.enemy.HP -= (this.gMagic*8)
         this.eHPText.setText(this.enemy.HP)
         console.log(this.enemy.HP)
+        this.playerTurn = false
+    }
+
+    aSci1(){
+        this.enemy.HP -= (this.aScience*8)
+        this.eHPText.setText(this.enemy.HP)
+        console.log(this.enemy.HP)
+        this.playerTurn = false
+    }
+
+    dMagic1(){
+        if (this.aHP < 500){
+            this.aHP += (this.dMagic*4)
+        }
+        if (this.aHP < 500){
+            this.dHP += (this.dMagic*4)
+        }
+        if (this.aHP < 500){
+            this.gHP += (this.dMagic*4)
+        }
         this.playerTurn = false
     }
 }
