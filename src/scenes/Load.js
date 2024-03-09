@@ -20,6 +20,11 @@ class Load extends Phaser.Scene {
             frameHeight: 36
         })
 
+        this.load.spritesheet('leslieMonster', './assets/LeslieEnemy.png', {
+            frameWidth: 640,
+            frameHeight: 528
+        })
+
         this.load.image('menuBox9Slice', './assets/MenuBox9Slice.png')
         this.load.image('combatMenuBox9Slice', './assets/CombatMenuBox9Slice.png')
 

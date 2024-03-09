@@ -17,7 +17,8 @@ class BattleCursor extends Phaser.GameObjects.Sprite { //lexical declaration err
             //darwinAtks: new DarwinAtksState(),
             gumballMg: new GumballMagicState(),
             //anaisMg: new AnaisMagicState(),
-            //darwinMg: new DarwinMagicState(),
+            anaisSci: new AnaisSciState(),
+            darwinMg: new DarwinMagicState()//,
             //itemsBattle: new ItemsBattleState
         }, [scene, this])
 
@@ -134,6 +135,82 @@ class GumballMagicState extends State {
                 case 0:
                     console.log("gMagic1")
                     scene.gMagic1()
+                    this.stateMachine.transition('enemyTurn')
+                    break
+            }    
+        }
+
+    }    
+}
+
+class AnaisSciState extends State {
+    enter(scene, cursor) {
+        console.log("AnaisSciState enter")
+        scene.aSciMenuBox.x = scene.charMenuX+50
+        scene.aSciMenuBox.y = scene.charMenuY+50
+        cursor.x = scene.cursorMenuX+50
+        cursor.y = scene.cursorMenuY+50
+        cursor.menuPos = 0
+    }
+
+    execute(scene, cursor){
+        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 0){
+            console.log("up input")
+            cursor.y = cursor.y - scene.cursorMenuMoveInterval
+            cursor.menuPos--
+            //console.log(cursor.menu)
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyDOWN) && cursor.menuPos < scene.gMagicNum){
+            console.log("down input")
+            cursor.y = cursor.y + scene.cursorMenuMoveInterval
+            cursor.menuPos++
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyBACK)){
+            this.stateMachine.transition('charBattle')
+        }
+        if(Phaser.Input.Keyboard.JustDown(keySPACE)){
+            switch(cursor.menuPos) {
+                case 0:
+                    console.log("aSci1")
+                    scene.aSci1()
+                    this.stateMachine.transition('enemyTurn')
+                    break
+            }    
+        }
+
+    }    
+}
+
+class DarwinMagic extends State {
+    enter(scene, cursor) {
+        console.log("GumballMagicState enter")
+        scene.dMagicMenuBox.x = scene.charMenuX+50
+        scene.dMagicMenuBox.y = scene.charMenuY+50
+        cursor.x = scene.cursorMenuX+50
+        cursor.y = scene.cursorMenuY+50
+        cursor.menuPos = 0
+    }
+
+    execute(scene, cursor){
+        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 0){
+            console.log("up input")
+            cursor.y = cursor.y - scene.cursorMenuMoveInterval
+            cursor.menuPos--
+            //console.log(cursor.menu)
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyDOWN) && cursor.menuPos < scene.gMagicNum){
+            console.log("down input")
+            cursor.y = cursor.y + scene.cursorMenuMoveInterval
+            cursor.menuPos++
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyBACK)){
+            this.stateMachine.transition('charBattle')
+        }
+        if(Phaser.Input.Keyboard.JustDown(keySPACE)){
+            switch(cursor.menuPos) {
+                case 0:
+                    console.log("dMagic1")
+                    scene.dMagic1()
                     this.stateMachine.transition('enemyTurn')
                     break
             }    
