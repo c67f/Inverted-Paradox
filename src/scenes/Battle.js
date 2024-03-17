@@ -158,15 +158,20 @@ class Battle extends Phaser.Scene {
     }
 
     gMagic1(){
-        this.enemy.HP -= (this.gMagic*8)
-        this.eHPText.setText(this.enemy.HP)
+        this.enemy.incomingDmgType = 2
+        this.enemy.incomingDmg = (this.gMagic*8)
+        //this.eHPText.setText(this.enemy.HP)
         console.log(this.enemy.HP)
         this.playerTurn = false
     }
 
+    //gMagic2(){
+    //}
+
     aSci1(){
-        this.enemy.HP -= (this.aScience*8)
-        this.eHPText.setText(this.enemy.HP)
+        this.enemy.incomingDmgType = 1
+        this.enemy.incomingDmg = (this.aScience*8)
+        //this.eHPText.setText(this.enemy.HP)
         console.log(this.enemy.HP)
         this.playerTurn = false
     }
@@ -192,6 +197,10 @@ class Battle extends Phaser.Scene {
         }
         this.playerTurn = false
     }
+
+    //dMagic2(){
+        //this.enemy.incomingDmgType
+    //}
 
     bananaPeel(){
         let randNum = Phaser.Math.Between(1, 1)

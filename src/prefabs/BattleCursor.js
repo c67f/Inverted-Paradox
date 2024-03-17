@@ -107,7 +107,7 @@ class CharBattleState extends State {
             if (cursor.menuPos == 1){
                 this.stateMachine.transition('itemsBattle')
             } else if (cursor.currentChar == 2) {
-                console.log("gumbalMg select")
+                console.log("gumballMg select")
                 if (cursor.menuPos == 0){
                     this.stateMachine.transition('gumballMg')
                 }
@@ -158,6 +158,7 @@ class GumballMagicState extends State {
             switch(cursor.menuPos) {
                 case 0:
                     console.log("gMagic1")
+                    //scene.enemy.incomingDmgType = 2 //0 is typeless, 1 is fire, 2 is electricity, 3 is water
                     scene.gMagic1()
                     this.stateMachine.transition('enemyTurn')
                     break
@@ -196,6 +197,7 @@ class AnaisSciState extends State {
             switch(cursor.menuPos) {
                 case 0:
                     console.log("aSci1")
+                    //enemy.incomingDmgType
                     scene.aSci1()
                     this.stateMachine.transition('enemyTurn')
                     break

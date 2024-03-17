@@ -20,6 +20,9 @@ class LeslieEnemy extends Phaser.GameObjects.Sprite { //lexical declaration erro
         this.dmgRandMod = -1
         this.lastAtk = 1 // 0 is leafAtk, 1 is vineAtk
 
+        this.incomingDmg
+        this.incomingDmgType = 0
+
         scene.leslieFSM = new StateMachine('offTurn', {
             offTurn: new offTurnState(),
             atkDecide: new atkDecideState(),
@@ -78,6 +81,17 @@ class atkDecideState extends State {
     enter(scene, leslie) {
         console.log("atkDecideState enter")
         leslie.randNum = Phaser.Math.Between(1, 10)
+        //Elemental weakness(es):
+        if (leslie.incomingDmgType == 1){
+            leslie.HP -= leslie.incomingDmg * 2
+            scene.eHPText.setText(leslie.HP)
+        } else if (leslie.incomingDmgType == 3){
+            leslie.HP -= leslie.incomingDmg * 2
+            scene.eHPText.setText(leslie.HP)
+        } else {
+            leslie.HP -= leslie.incomingDmg
+            scene.eHPText.setText(leslie.HP)
+        }
     }
 
     execute(scene, leslie) {

@@ -2,13 +2,16 @@
 
 let config = {
     type:Phaser.AUTO,
+    render: {
+      pixelArt: true
+    },
     width: 1080,
     height: 720,
-    scene: [ Load, Battle, Victory ],
+    scene: [ Load, Overworld, Battle, Victory ],
     physics: {
       default: 'arcade',
       arcade: {
-        debug: false
+        debug: true
       }
     }
 }

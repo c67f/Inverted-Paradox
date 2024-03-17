@@ -8,6 +8,21 @@ class Load extends Phaser.Scene {
         //load assets
         //this.load.path = "./assets"  
 
+
+
+        this.load.spritesheet('gumballOverworld', './assets/GumballSprite.png', {
+            frameWidth: 85,
+            frameHeight: 123
+        })
+        this.load.spritesheet('anaisOverworld', './assets/AnaisMapSprite.png', {
+            frameWidth: 104,
+            frameHeight: 139
+        })
+        this.load.spritesheet('darwinOverworld', './assets/DarwinMapSprite', {
+            frameWidth: 104,
+            frameHeight: 139
+        })
+
         this.load.image('background', './assets/BackgroundSimple.png')
         this.load.image('gumballCombat', './assets/GumballCombatSprite.png')
         this.load.image('anaisCombat', './assets/AnaisCombatSprite.png')
@@ -36,6 +51,28 @@ class Load extends Phaser.Scene {
         this.load.bitmapFont('RPG_font', 'font/RPGFont.png', 'font/RPGFont.xml')
 
         this.load.audio('battle', './assets/BattleTheme.wav')
+
+
+        /*this.anims.create({
+            key: 'anaisWalk',
+            framerate: 3,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('anaisOverworld', {
+                start: 0,
+                end: 1
+            })
+
+        })
+        this.anims.create({
+            key: 'darwinWalk',
+            framerate: 3,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('darwinOverworld', {
+                start: 0,
+                end: 1
+            })
+
+        })*/
     }
     
     create(){
@@ -49,6 +86,7 @@ class Load extends Phaser.Scene {
         //this.add.bitmapText(200, 200, 'RPG_font', 'test', 32).setOrigin(0.5)
         window:localStorage ? console.log('Local storage supported') : console.log('Local storage not supported')
         console.log("loadscene")
-        this.scene.start("battleScene")
+        this.scene.start("overworldScene")
+        //this.scene.start("battleScene")
     }
 }
