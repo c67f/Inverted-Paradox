@@ -1,6 +1,6 @@
-class Battle extends Phaser.Scene {
+class PennyBattle extends Phaser.Scene {
     constructor() {
-        super("battleScene")
+        super("pennyBattleScene")
     }
 
     init() {
@@ -31,25 +31,25 @@ class Battle extends Phaser.Scene {
         keyBACK = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z)
 
         //placeholder
-        this.itemsNum = 1
+        this.itemsNum = 2
         //gumballAtkNum = 1
-        this.gMagicNum = 1
+        this.gMagicNum = 2
         //anaisAtkNum = 1
-        this.aMagicNum = 0
-        this.aSciNum = 1
+        this.aMagicNum = 1
+        this.aSciNum = 2
         //darwinAtkNum = 1
-        this.dMagicNum = 1
+        this.dMagicNum = 2
 
         //Combat stats:
-        this.gHP = 500
+        this.gHP = 700
         this.gMagic = 8
         this.gScience = 2
         
-        this.aHP = 500
+        this.aHP = 700
         this.aMagic = 5
         this.aScience = 15
         
-        this.dHP = 500
+        this.dHP = 700
         this.dMagic = 10
         this.dScience = 3
         
@@ -72,7 +72,7 @@ class Battle extends Phaser.Scene {
         //this.cursorParty = this.add.sprite(width/2.8, height*0.42, 'cursorParty').setOrigin(0.5, 1)
         this.battleCursor = new BattleCursor(this, this.cursorStartX, this.cursorStartY, 'cursor', 0).setOrigin(0.5, 1)
 
-        this.enemy = new LeslieEnemy(this, this.enemyStartX, this.enemyStartY, 'leslieMonster', 0).setOrigin(0.5)
+        this.enemy = new PennyEnemy(this, this.enemyStartX, this.enemyStartY, 'PennyMonster', 0).setOrigin(0.5)
 
     //UI:
         //names:
@@ -98,16 +98,19 @@ class Battle extends Phaser.Scene {
         this.charMenuBox.create('MAGIC', 'ITEM', 'SCIENCE')
 
         this.gMagicMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
-        this.gMagicMenuBox.create('ELEC 1')
+        this.gMagicMenuBox.create('ELEC 1', 'ENRG 1')
+
+        this.aMagicMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
+        this.aMagicMenuBox.create('EXPLSN 1')
 
         this.aSciMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
-        this.aSciMenuBox.create('BLASTMIX')
+        this.aSciMenuBox.create('BLASTMIX', 'WEAKMIX')
 
         this.dMagicMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
         this.dMagicMenuBox.create('HEAL 1')
 
         this.itemMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
-        this.itemMenuBox.create('BANANA')
+        this.itemMenuBox.create('BANANA', 'DVDPLR')
         //this.charMenuBox.create(this)
         //this.TestBox = new MenuBox(this, width/18, height/10, 'menuBox9Slice', 0, 500, 150, 5, 5, 5, 5).setOrigin(0)
         //this.TestBox = new MenuBox(this, width*0.8, height*0.8, 'combatMenuBox9Slice', 0, 150, 150, 5, 5, 13, 5)
@@ -125,7 +128,7 @@ class Battle extends Phaser.Scene {
         this.aHPText.setText(this.aHP.toFixed(0))
         this.dHPText.setText(this.dHP.toFixed(0))
         this.cursorFSM.step()
-        this.leslieFSM.step()
+        this.pennyFSM.step()
         this.charMenuBox.update() //need to call the update method so it is run in this update method - update in the prefabs might not have any inherent definition?
         this.gMagicMenuBox.update()
         this.aSciMenuBox.update()
@@ -204,6 +207,10 @@ class Battle extends Phaser.Scene {
         //this.eHPText.setText(this.enemy.HP)
         console.log(this.enemy.HP)
         this.playerTurn = false
+    }
+
+    aSci2() {
+
     }
 
     dMagic1(){

@@ -15,10 +15,10 @@ class Load extends Phaser.Scene {
             frameHeight: 123
         })
         this.load.spritesheet('anaisOverworld', './assets/AnaisMapSprite.png', {
-            frameWidth: 104,
-            frameHeight: 139
+            frameWidth: 102,
+            frameHeight: 115
         })
-        this.load.spritesheet('darwinOverworld', './assets/DarwinMapSprite', {
+        this.load.spritesheet('darwinOverworld', './assets/DarwinMapSprite.png', {
             frameWidth: 104,
             frameHeight: 139
         })
@@ -29,7 +29,8 @@ class Load extends Phaser.Scene {
         this.load.image('darwinCombat', './assets/DarwinCombatSprite.png')
         //this.load.image('cursorMenu', './assets/CursorMenu.png'),
         //this.load.image('cursorParty', './assets/CursorParty.png')
-        
+
+
         this.load.spritesheet('cursor', './assets/CursorSpritesheet.png', {
             frameWidth: 62,
             frameHeight: 36
@@ -39,11 +40,26 @@ class Load extends Phaser.Scene {
             frameWidth: 640,
             frameHeight: 528
         })
+        this.load.spritesheet('pennyMonster', './assets/PennyEnemy.png', {
+            frameWidth: 447,
+            frameHeight: 640
+        })
 
         this.load.image('menuBox9Slice', './assets/MenuBox9Slice.png')
         this.load.image('combatMenuBox9Slice', './assets/CombatMenuBox9Slice.png')
 
+        //attack images:
         this.load.image('bananaPeel', './assets/BananaPeel.png')
+        this.load.spritesheet('gumballMagic1', './assets/GumballMagic1.png', {
+            frameWidth: 320,
+            frameHeight: 222
+        })
+        this.load.spritesheet('gumballMagic2', './assets/GumballMagic2.png', {
+            frameWidth: 320,
+            frameHeight: 182
+        })
+        //this.load.spritesheet('gumballMagic1')
+
 
         this.load.image('victory', './assets/VictoryImage.png')
 
@@ -52,8 +68,39 @@ class Load extends Phaser.Scene {
 
         this.load.audio('battle', './assets/BattleTheme.wav')
 
+        
+    }
+    
+    create(){
+        this.anims.create({  //turns out animations can't be in preload with the textures they use
+            key: 'gMagic1Start',
+            framerate: 9,
+            repeat: 0,
+            frames: this.anims.generateFrameNumbers('gumballMagic1', {
+                start: 0,
+                end: 1
+            })
+        })
+        this.anims.create({
+            key: 'gMagic1Loop',
+            framerate: 9,
+            repeat: 3,
+            frames: this.anims.generateFrameNumbers('gumballMagic1', {
+                start: 2,
+                end: 4
+            })
+        })
+        this.anims.create({
+            key: 'gMagic2',
+            framerate: 9,
+            repeat: 0,
+            frames: this.anims.generateFrameNumbers('gumballMagic2', {
+                start: 0,
+                end: 5
+            })
+        })
 
-        /*this.anims.create({
+        this.anims.create({
             key: 'anaisWalk',
             framerate: 3,
             repeat: -1,
@@ -63,7 +110,7 @@ class Load extends Phaser.Scene {
             })
 
         })
-        this.anims.create({
+        /*this.anims.create({
             key: 'darwinWalk',
             framerate: 3,
             repeat: -1,
@@ -73,9 +120,7 @@ class Load extends Phaser.Scene {
             })
 
         })*/
-    }
-    
-    create(){
+
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP)

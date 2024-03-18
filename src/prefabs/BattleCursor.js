@@ -86,7 +86,7 @@ class CharBattleState extends State {
         cursor.setDepth(scene.charMenuBox.displayHeight+1)
         //console.log(cursor.texture)
         //cursor.texture = 'cursorMenu'
-        cursor.menuPos = 0
+        cursor.menuPos = 1
         //console.log(this.menuPos)
         cursor.setFrame(1)
     }
@@ -108,7 +108,7 @@ class CharBattleState extends State {
                 this.stateMachine.transition('itemsBattle')
             } else if (cursor.currentChar == 2) {
                 console.log("gumballMg select")
-                if (cursor.menuPos == 0){
+                if (cursor.menuPos == 1){
                     this.stateMachine.transition('gumballMg')
                 }
                 
@@ -118,7 +118,7 @@ class CharBattleState extends State {
                     this.stateMachine.transition('anaisSci')
                 }
             }else if(cursor.currentChar == 0){
-                if (cursor.menuPos == 0){
+                if (cursor.menuPos == 1){
                     this.stateMachine.transition('darwinMg')
                 }
             }
@@ -136,7 +136,7 @@ class GumballMagicState extends State {
         scene.gMagicMenuBox.y = scene.charMenuY+50
         cursor.x = scene.cursorMenuX+50
         cursor.y = scene.cursorMenuY+50
-        cursor.menuPos = 0
+        cursor.menuPos = 1
     }
 
     execute(scene, cursor){
@@ -156,10 +156,15 @@ class GumballMagicState extends State {
         }
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
             switch(cursor.menuPos) {
-                case 0:
+                case 1:
                     console.log("gMagic1")
                     //scene.enemy.incomingDmgType = 2 //0 is typeless, 1 is fire, 2 is electricity, 3 is water
                     scene.gMagic1()
+                    this.stateMachine.transition('enemyTurn')
+                    break
+                case 2:
+                    console.log('gMagic2')
+                    scene.gMagic2()
                     this.stateMachine.transition('enemyTurn')
                     break
             }    

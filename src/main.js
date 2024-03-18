@@ -7,7 +7,7 @@ let config = {
     },
     width: 1080,
     height: 720,
-    scene: [ Load, Overworld, Battle, Victory ],
+    scene: [ Load, Overworld, Battle, PennyBattle, Victory ],
     physics: {
       default: 'arcade',
       arcade: {

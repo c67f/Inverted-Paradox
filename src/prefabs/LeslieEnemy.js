@@ -82,11 +82,11 @@ class atkDecideState extends State {
         console.log("atkDecideState enter")
         leslie.randNum = Phaser.Math.Between(1, 10)
         //Elemental weakness(es):
-        if (leslie.incomingDmgType == 1){
+        if (leslie.incomingDmgType == 1){ //weak to fire
             leslie.HP -= leslie.incomingDmg * 2
             scene.eHPText.setText(leslie.HP)
-        } else if (leslie.incomingDmgType == 3){
-            leslie.HP -= leslie.incomingDmg * 2
+        } else if (leslie.incomingDmgType == 3){ //resistant to water (though the party has no water spells when facing Leslie)
+            leslie.HP -= leslie.incomingDmg / 2
             scene.eHPText.setText(leslie.HP)
         } else {
             leslie.HP -= leslie.incomingDmg

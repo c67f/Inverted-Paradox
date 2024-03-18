@@ -30,6 +30,9 @@ class Overworld extends Phaser.Scene {
         this.leslieBattle = this.physics.add.sprite(this.leslieBattleXY.x, this.leslieBattleXY.y, 'gumballOverworld', 0)
         this.leslieBattle.setImmovable()
 
+        this.pennyBattleXY = map.findObject('Battles', (obj) => obj.name === 'pennyBattle')
+        this.pennyBattle = this.physics.add.sprite(this.pennyBattleXY.x, this.pennyBattleXY.y, 'gumballOverworld', 0)
+
         this.gumballMap = this.physics.add.sprite(gSpawn.x, gSpawn.y, 'gumballOverworld', 0)
         this.anaisMap = this.physics.add.sprite(aSpawn.x, aSpawn.y, 'anaisOverworld', 0)
         this.darwinMap = this.physics.add.sprite(dSpawn.x, dSpawn.y, 'darwinOverworld', 0)
@@ -47,6 +50,7 @@ class Overworld extends Phaser.Scene {
         this.physics.add.collider(this.darwinMap, collideLayer)
 
         this.physics.add.collider(this.gumballMap, this.leslieBattle, this.leslieBattleStart, null, this)
+        this.physics.add.collider(this.gumballMap, this.pennyBattle, this.pennyBattleStart, null, this)
         
         this.cursors = this.input.keyboard.createCursorKeys()
     }
@@ -96,5 +100,10 @@ class Overworld extends Phaser.Scene {
         console.log('touched leslieBattle')
         //visual transition?
         this.scene.start('battleScene')
+    }
+
+    pennyBattleStart(){
+        console.log('touhed pennyBattle')
+        this.scene.start('pennyBattleScene')
     }
 }
