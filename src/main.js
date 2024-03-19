@@ -22,3 +22,4 @@ console.log("test")
 //reserve keyboard bindings
 let keyLEFT, keyRIGHT, keyDOWN, keyUP, keySPACE, keyBACK
 let itemsNum, gumballAtkNum, gumballMgNum, anaisAtkNum, anaisMgNum, anaisSciNum, darwinAtkNum, darwinMgNum
+let leslieBeaten = 0

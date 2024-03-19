@@ -140,6 +140,7 @@ class Battle extends Phaser.Scene {
 
         if (this.enemy.HP <= 0){
             this.music.stop()
+            leslieBeaten = 1
             this.scene.start('victoryScene')
         }
         if (this.aHP <= 0 && this.gHP <=0 && this.dHP <= 0){

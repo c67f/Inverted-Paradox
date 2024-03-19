@@ -27,9 +27,11 @@ class Overworld extends Phaser.Scene {
         const dSpawn = map.findObject('Spawns', (obj) => obj.name ==='dSpawn')
         //console.log(gSpawn)
         this.leslieBattleXY = map.findObject('Battles', (obj) => obj.name === 'leslieBattle')
-        this.leslieBattle = this.physics.add.sprite(this.leslieBattleXY.x, this.leslieBattleXY.y, 'leslieMonster', 0)
-        this.leslieBattle.setDisplaySize(95, 90)
-        this.leslieBattle.setImmovable()
+        if (leslieBeaten == 0) {
+            this.leslieBattle = this.physics.add.sprite(this.leslieBattleXY.x, this.leslieBattleXY.y, 'leslieMonster', 0)
+            this.leslieBattle.setDisplaySize(95, 90)
+            this.leslieBattle.setImmovable()
+        }
 
         this.pennyBattleXY = map.findObject('Battles', (obj) => obj.name === 'pennyBattle')
         this.pennyBattle = this.physics.add.sprite(this.pennyBattleXY.x, this.pennyBattleXY.y, 'pennyMonster', 0)
