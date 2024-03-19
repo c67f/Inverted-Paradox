@@ -124,9 +124,26 @@ class leafAtkState extends State{
     execute(scene, leslie) {
         if (leslie.attacked === false){
             leslie.randNum = Phaser.Math.Between(0, 2) //determine target
+            let leafAtkSprite = scene.add.sprite(width/2.8, 400, 'leafAtkSprite')
+            leafAtkSprite.setDisplaySize(120, 120)
             switch(leslie.randNum){
                 case 0:
-                    console.log("targeting Darwin")
+                    console.log("targeting Gumball")
+
+                    leafAtkSprite.x = width/8
+                    leafAtkSprite.play({key: 'leafAtkStart', frameRate: 7})
+                    leafAtkSprite.on('animationcomplete', () => {
+                        console.log('leafAtk playing')
+                        leafAtkSprite.play({key: 'leafAtkFinish', frameRate: 15})
+                        leafAtkSprite.on('animationcomplete', () => {
+                            console.log('destroying leafAtkSprite')
+                            //this.gMagic1Sprite.x = -500
+                            //this.gMagic1Sprite.y = 0
+                            leafAtkSprite.destroy()
+                        })
+                    })
+                    
+
                     leslie.dmg = leslie.atk * leslie.dmgRandMod * leslie.leafAtkBase
                 
                     scene.time.delayedCall(leslie.leafDelayInterval, () => {
@@ -146,6 +163,20 @@ class leafAtkState extends State{
                     break
                 case 1:
                     console.log("targeting Anais")
+                    
+                    leafAtkSprite.x = width/4.3
+                    leafAtkSprite.play({key: 'leafAtkStart', frameRate: 7})
+                    leafAtkSprite.on('animationcomplete', () => {
+                        console.log('leafAtk playing')
+                        leafAtkSprite.play({key: 'leafAtkFinish', frameRate: 15})
+                        leafAtkSprite.on('animationcomplete', () => {
+                            console.log('destroying leafAtkSprite')
+                            //this.gMagic1Sprite.x = -500
+                            //this.gMagic1Sprite.y = 0
+                            leafAtkSprite.destroy()
+                        })
+                    })
+
                     leslie.dmg = leslie.atk * leslie.dmgRandMod * leslie.leafAtkBase
                     
                     scene.aHP = scene.aHP - leslie.dmg
@@ -163,7 +194,21 @@ class leafAtkState extends State{
                     }, null, this)
                     break
                 case 2:
-                    console.log("targeting Gumball")
+                    console.log("targeting Darwin")
+
+                    leafAtkSprite.x = width/2.8
+                    leafAtkSprite.play({key: 'leafAtkStart', frameRate: 7})
+                    leafAtkSprite.on('animationcomplete', () => {
+                        console.log('leafAtk playing')
+                        leafAtkSprite.play({key: 'leafAtkFinish', frameRate: 15})
+                        leafAtkSprite.on('animationcomplete', () => {
+                            console.log('destroying leafAtkSprite')
+                            //this.gMagic1Sprite.x = -500
+                            //this.gMagic1Sprite.y = 0
+                            leafAtkSprite.destroy()
+                        })
+                    })
+
                     leslie.dmg = leslie.atk * leslie.dmgRandMod * leslie.leafAtkBase
                     
                     scene.dHP = scene.dHP - leslie.dmg
@@ -197,6 +242,9 @@ class vineAtkState extends State{
         //leslie.randNum = Phaser.Math.Between(0, 2) //determine target
         leslie.dmg = leslie.atk * leslie.dmgRandMod * leslie.vineAtkBase
         if (leslie.attacked === false) {
+            let vineAtkSprite = scene.add.sprite(width/4.2, 485, 'vineAtk')
+            vineAtkSprite.setDisplaySize(380, 380)
+
             console.log("vine attack damage:")
             console.log(leslie.dmg)
             scene.gHP = scene.gHP - leslie.dmg
@@ -204,6 +252,7 @@ class vineAtkState extends State{
             scene.dHP = scene.dHP - leslie.dmg
             leslie.attacked = true
             scene.time.delayedCall(2000, () => {
+                vineAtkSprite.destroy()
                 this.stateMachine.transition('offTurn')
             }, null, this)
         }

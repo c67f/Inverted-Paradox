@@ -27,11 +27,14 @@ class Overworld extends Phaser.Scene {
         const dSpawn = map.findObject('Spawns', (obj) => obj.name ==='dSpawn')
         //console.log(gSpawn)
         this.leslieBattleXY = map.findObject('Battles', (obj) => obj.name === 'leslieBattle')
-        this.leslieBattle = this.physics.add.sprite(this.leslieBattleXY.x, this.leslieBattleXY.y, 'gumballOverworld', 0)
+        this.leslieBattle = this.physics.add.sprite(this.leslieBattleXY.x, this.leslieBattleXY.y, 'leslieMonster', 0)
+        this.leslieBattle.setDisplaySize(95, 90)
         this.leslieBattle.setImmovable()
 
         this.pennyBattleXY = map.findObject('Battles', (obj) => obj.name === 'pennyBattle')
-        this.pennyBattle = this.physics.add.sprite(this.pennyBattleXY.x, this.pennyBattleXY.y, 'gumballOverworld', 0)
+        this.pennyBattle = this.physics.add.sprite(this.pennyBattleXY.x, this.pennyBattleXY.y, 'pennyMonster', 0)
+        this.pennyBattle.setDisplaySize(80, 100)
+        this.pennyBattle.setImmovable()
 
         this.gumballMap = this.physics.add.sprite(gSpawn.x, gSpawn.y, 'gumballOverworld', 0)
         this.anaisMap = this.physics.add.sprite(aSpawn.x, aSpawn.y, 'anaisOverworld', 0)
@@ -99,6 +102,7 @@ class Overworld extends Phaser.Scene {
     leslieBattleStart(){
         console.log('touched leslieBattle')
         //visual transition?
+        this.leslieBattle.destroy()
         this.scene.start('battleScene')
     }
 

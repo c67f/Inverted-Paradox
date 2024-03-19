@@ -7,6 +7,8 @@ class PennyEnemy extends Phaser.GameObjects.Sprite { //lexical declaration error
         //this.leafDelayInterval = 400
         this.stunned = false
         this.stunCounter = 0
+        this.statusTimer = -1
+        this.statusTimerMax = 0
 
         console.log('Penny monster created')
         this.HP = 2500
@@ -14,7 +16,7 @@ class PennyEnemy extends Phaser.GameObjects.Sprite { //lexical declaration error
         this.dmg = 0
 
         this.zapAtkBase = 4
-        this.chargeAtkBase = 6
+        this.chargeAtkBase = 9
         
         this.randNum = -1
         this.dmgRandMod = -1
@@ -40,6 +42,13 @@ class PennyEnemy extends Phaser.GameObjects.Sprite { //lexical declaration error
 
 class offTurnStateP extends State {
     enter(scene, penny) {
+        if (penny.statusTimer > -1){
+            penny.statusTimer++
+            if (penny.statusTimer >= penny.statusTimerMax){
+                penny.dmgMod = 1
+                penny.statusTimer == -1
+            }
+        }
         console.log("offTurnState enter")
         penny.setFrame(0)
     }
@@ -117,15 +126,26 @@ class zapAtkState extends State{
         console.log("zapAtkState enter")
         penny.attacked = false
         penny.dmgRandMod = Phaser.Math.FloatBetween(0.8, 1.2)
+        penny.setFrame(1)
     }
     
     execute(scene, penny) {
         if (penny.attacked === false){
             penny.randNum = Phaser.Math.Between(0, 2) //determine target
+            let zapAtkSprite = scene.add.sprite(width/2.8, 400, 'zapAtkSprite').setOrigin(0, 0.5)
+            zapAtkSprite.setDisplaySize(160, 160)
             switch(penny.randNum){
                 case 0:
                     console.log("targeting Darwin")
-                    penny.dmg = penny.atk * penny.dmgRandMod * penny.zapAtkBase
+
+                    zapAtkSprite.x = width/8
+                    zapAtkSprite.play({key: 'zapAtk', frameRate: 12})
+                    zapAtkSprite.on('animationcomplete', () => {
+                        console.log('zapAtk playing')
+                        zapAtkSprite.destroy()
+                    })
+
+                    penny.dmg = penny.atk * penny.dmgRandMod * penny.dmgMod * penny.zapAtkBase
                     scene.gHP = scene.gHP - penny.dmg
                     console.log(scene.gHP)
 
@@ -136,7 +156,15 @@ class zapAtkState extends State{
                     break
                 case 1:
                     console.log("targeting Anais")
-                    penny.dmg = penny.atk * penny.dmgRandMod * penny.zapAtkBase
+
+                    zapAtkSprite.x = width/4.3
+                    zapAtkSprite.play({key: 'zapAtk', frameRate: 7})
+                    zapAtkSprite.on('animationcomplete', () => {
+                        console.log('zapAtk playing')
+                        zapAtkSprite.destroy()
+                    })
+
+                    penny.dmg = penny.atk * penny.dmgRandMod * penny.dmgMod * penny.zapAtkBase
                     scene.aHP = scene.aHP - penny.dmg
                     console.log(scene.aHP)
 
@@ -147,7 +175,15 @@ class zapAtkState extends State{
                     break
                 case 2:
                     console.log("targeting Gumball")
-                    penny.dmg = penny.atk * penny.dmgRandMod * penny.zapAtkBase
+
+                    zapAtkSprite.x = width/2.8
+                    zapAtkSprite.play({key: 'zapAtk', frameRate: 7})
+                    zapAtkSprite.on('animationcomplete', () => {
+                        console.log('zapAtk playing')
+                        zapAtkSprite.destroy()
+                    })
+
+                    penny.dmg = penny.atk * penny.dmgRandMod * penny.dmgMod * penny.zapAtkBase
                     scene.dHP = scene.dHP - penny.dmg
                     console.log(scene.dHP)
 
@@ -167,6 +203,7 @@ class chargingState extends State{
         penny.lastAtk = 2
         console.log("chargingState enter")
         penny.attacked = false
+        penny.setFrame(2)
     }
 
     execute(scene, penny) {
@@ -187,13 +224,14 @@ class chargeAtkState extends State{
         console.log("chargeAtkState enter")
         penny.attacked = false
         penny.dmgRandMod = Phaser.Math.FloatBetween(0.8, 1.2)
+        penny.setFrame(1)
     }
     
     execute(scene, penny) {
         //penny.randNum = Phaser.Math.Between(0, 2) //determine target
 
         if (penny.attacked === false) {
-            penny.dmg = penny.atk * penny.dmgRandMod * penny.chargeAtkBase
+            penny.dmg = penny.atk * penny.dmgRandMod * penny.dmgMod * penny.chargeAtkBase
             console.log("vine attack damage:")
             console.log(penny.dmg)
             scene.gHP = scene.gHP - penny.dmg

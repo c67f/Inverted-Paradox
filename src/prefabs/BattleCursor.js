@@ -92,19 +92,19 @@ class CharBattleState extends State {
     }
     
     execute(scene, cursor){
-        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 0){
-            console.log("up input")
+        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 1){
+            //console.log("up input")
             cursor.y = cursor.y - scene.cursorMenuMoveInterval
             cursor.menuPos--
             //console.log(cursor.menu)
         }
-        if(Phaser.Input.Keyboard.JustDown(keyDOWN) && cursor.menuPos < 2){
-            console.log("down input")
+        if(Phaser.Input.Keyboard.JustDown(keyDOWN) && cursor.menuPos < 3){
+            //console.log("down input")
             cursor.y = cursor.y + scene.cursorMenuMoveInterval
             cursor.menuPos++
         }
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
-            if (cursor.menuPos == 1){
+            if (cursor.menuPos == 2){
                 this.stateMachine.transition('itemsBattle')
             } else if (cursor.currentChar == 2) {
                 console.log("gumballMg select")
@@ -114,7 +114,7 @@ class CharBattleState extends State {
                 
             } else if(cursor.currentChar == 1){
                 //console.log('anaisSci select')
-                if (cursor.menuPos == 2){
+                if (cursor.menuPos == 3){
                     this.stateMachine.transition('anaisSci')
                 }
             }else if(cursor.currentChar == 0){
@@ -140,7 +140,7 @@ class GumballMagicState extends State {
     }
 
     execute(scene, cursor){
-        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 0){
+        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 1){
             console.log("up input")
             cursor.y = cursor.y - scene.cursorMenuMoveInterval
             cursor.menuPos--
@@ -180,11 +180,11 @@ class AnaisSciState extends State {
         scene.aSciMenuBox.y = scene.charMenuY+50
         cursor.x = scene.cursorMenuX+50
         cursor.y = scene.cursorMenuY+50
-        cursor.menuPos = 0
+        cursor.menuPos = 1
     }
 
     execute(scene, cursor){
-        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 0){
+        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 1){
             console.log("up input")
             cursor.y = cursor.y - scene.cursorMenuMoveInterval
             cursor.menuPos--
@@ -200,10 +200,15 @@ class AnaisSciState extends State {
         }
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
             switch(cursor.menuPos) {
-                case 0:
+                case 1:
                     console.log("aSci1")
                     //enemy.incomingDmgType
                     scene.aSci1()
+                    this.stateMachine.transition('enemyTurn')
+                    break
+                case 2:
+                    console.log('aSci2')
+                    scene.aSci2()
                     this.stateMachine.transition('enemyTurn')
                     break
             }    
@@ -219,11 +224,11 @@ class DarwinMagicState extends State {
         scene.dMagicMenuBox.y = scene.charMenuY+50
         cursor.x = scene.cursorMenuX+50
         cursor.y = scene.cursorMenuY+50
-        cursor.menuPos = 0
+        cursor.menuPos = 1
     }
 
     execute(scene, cursor){
-        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 0){
+        if(Phaser.Input.Keyboard.JustDown(keyUP) && cursor.menuPos > 1){
             console.log("up input")
             cursor.y = cursor.y - scene.cursorMenuMoveInterval
             cursor.menuPos--
@@ -239,7 +244,7 @@ class DarwinMagicState extends State {
         }
         if(Phaser.Input.Keyboard.JustDown(keySPACE)){
             switch(cursor.menuPos) {
-                case 0:
+                case 1:
                     console.log("dMagic1")
                     scene.dMagic1()
                     this.stateMachine.transition('enemyTurn')
@@ -281,7 +286,7 @@ class ItemsBattleState extends State {
         scene.itemMenuBox.y = scene.charMenuY+50
         cursor.x = scene.cursorMenuX+50
         cursor.y = scene.cursorMenuY+50
-        cursor.menuPos = 0
+        cursor.menuPos = 1
     }
 
     execute(scene, cursor){
@@ -289,7 +294,7 @@ class ItemsBattleState extends State {
             this.stateMachine.transition('charBattle')
         } else if(Phaser.Input.Keyboard.JustDown(keySPACE)){
             switch(cursor.menuPos) {
-                case 0:
+                case 1:
                     console.log("bananaPeel")
                     scene.bananaPeel()
                     this.stateMachine.transition('enemyTurn')

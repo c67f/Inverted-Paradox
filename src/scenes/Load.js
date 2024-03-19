@@ -8,7 +8,7 @@ class Load extends Phaser.Scene {
         //load assets
         //this.load.path = "./assets"  
 
-
+        this.load.image('titleScreen', './assets/titleScreen.png')
 
         this.load.spritesheet('gumballOverworld', './assets/GumballSprite.png', {
             frameWidth: 85,
@@ -47,6 +47,17 @@ class Load extends Phaser.Scene {
 
         this.load.image('menuBox9Slice', './assets/MenuBox9Slice.png')
         this.load.image('combatMenuBox9Slice', './assets/CombatMenuBox9Slice.png')
+
+        this.load.spritesheet('leafAtk', './assets/LeslieLeafAtk.png', {
+            frameWidth: 200,
+            frameHeight: 50
+        })
+        this.load.image('vineAtk', './assets/LeslieVineAttack.png')
+
+        this.load.spritesheet('zapAtk', './assets/ZapAtk.png', {
+            frameWidth: 120,
+            frameHeight: 30
+        })
 
         //attack images:
         this.load.image('bananaPeel', './assets/BananaPeel.png')
@@ -101,6 +112,35 @@ class Load extends Phaser.Scene {
         })
 
         this.anims.create({
+            key: 'leafAtkStart',
+            framerate: 7,
+            repeat: 0,
+            frames: this.anims.generateFrameNumbers('leafAtk', {
+                start: 0,
+                end: 14
+            })
+        })
+        this.anims.create({
+            key: 'leafAtkFinish',
+            framerate: 15,
+            repeat: 0,
+            frames: this.anims.generateFrameNumbers('leafAtk', {
+                start: 15,
+                end: 20
+            })
+        })
+
+        this.anims.create({
+            key: 'zapAtk',
+            framerate: 7,
+            repeat: 0,
+            frames: this.anims.generateFrameNumbers('zapAtk',{
+                start: 0,
+                end: 8
+            })
+        })
+
+        this.anims.create({
             key: 'anaisWalk',
             framerate: 3,
             repeat: -1,
@@ -131,7 +171,8 @@ class Load extends Phaser.Scene {
         //this.add.bitmapText(200, 200, 'RPG_font', 'test', 32).setOrigin(0.5)
         window:localStorage ? console.log('Local storage supported') : console.log('Local storage not supported')
         console.log("loadscene")
-        this.scene.start("overworldScene")
+        this.scene.start('titleScene')
+        //this.scene.start("overworldScene")
         //this.scene.start("battleScene")
     }
 }

@@ -41,6 +41,8 @@ class PennyBattle extends Phaser.Scene {
         this.dMagicNum = 2
 
         //Combat stats:
+        this.maxHP = 700
+
         this.gHP = 700
         this.gMagic = 8
         this.gScience = 2
@@ -72,7 +74,8 @@ class PennyBattle extends Phaser.Scene {
         //this.cursorParty = this.add.sprite(width/2.8, height*0.42, 'cursorParty').setOrigin(0.5, 1)
         this.battleCursor = new BattleCursor(this, this.cursorStartX, this.cursorStartY, 'cursor', 0).setOrigin(0.5, 1)
 
-        this.enemy = new PennyEnemy(this, this.enemyStartX, this.enemyStartY, 'PennyMonster', 0).setOrigin(0.5)
+        this.enemy = new PennyEnemy(this, this.enemyStartX, this.enemyStartY, 'pennyMonster', 0).setOrigin(0.5)
+        this.enemy.setDisplaySize(300, 430)
 
     //UI:
         //names:
@@ -83,15 +86,15 @@ class PennyBattle extends Phaser.Scene {
         this.aName.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
         this.dName.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
         //health numbers:
-        this.gHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+5, this.mainFont, this.gHP, 18).setOrigin(0)
-        this.aHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+35, this.mainFont, this.aHP, 18).setOrigin(0)
-        this.dHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+65, this.mainFont, this.dHP, 18).setOrigin(0)
+        this.gHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+5, this.mainFont, this.gHP, 24).setOrigin(0)
+        this.aHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+35, this.mainFont, this.aHP, 24).setOrigin(0)
+        this.dHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+65, this.mainFont, this.dHP, 24).setOrigin(0)
         this.gHPText.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
         this.aHPText.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
         this.dHPText.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
 
 
-        this.eHPText = this.add.bitmapText(900, 80, this.mainFont, this.enemy.HP, 24).setOrigin(0)
+        this.eHPText = this.add.bitmapText(900, 80, this.mainFont, this.enemy.HP, 36).setOrigin(0)
         //this.eHPText.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
         
         this.charMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
@@ -110,7 +113,7 @@ class PennyBattle extends Phaser.Scene {
         this.dMagicMenuBox.create('HEAL 1')
 
         this.itemMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
-        this.itemMenuBox.create('BANANA', 'DVDPLR')
+        this.itemMenuBox.create('BANANA')//, 'DVDPLR')
         //this.charMenuBox.create(this)
         //this.TestBox = new MenuBox(this, width/18, height/10, 'menuBox9Slice', 0, 500, 150, 5, 5, 5, 5).setOrigin(0)
         //this.TestBox = new MenuBox(this, width*0.8, height*0.8, 'combatMenuBox9Slice', 0, 150, 150, 5, 5, 13, 5)
@@ -143,7 +146,7 @@ class PennyBattle extends Phaser.Scene {
 
         if (this.enemy.HP <= 0){
             this.music.stop()
-            this.scene.start('victoryScene')
+            this.scene.start('endScene')
         }
         if (this.aHP <= 0 && this.gHP <=0 && this.dHP <= 0){
             this.music.stop()
@@ -210,29 +213,35 @@ class PennyBattle extends Phaser.Scene {
     }
 
     aSci2() {
-
+        this.enemy.dmgMod = 0.5
+        this.enemy.statusTimerMax = 4
+        this.playerTurn = false
     }
 
     dMagic1(){
-        if (this.aHP < 500 && this.aHP > 0){
+        if (this.aHP < this.maxHP && this.aHP > 0){
             this.aHP += (this.dMagic*4)
         }
-        if (this.dHP < 500 && this.dHP > 0){
+        if (this.dHP < this.maxHP && this.dHP > 0){
             this.dHP += (this.dMagic*4)
         }
-        if (this.gHP < 500 && this.gHP > 0){
+        if (this.gHP < this.maxHP && this.gHP > 0){
             this.gHP += (this.dMagic*4)
         }
-        if (this.aHP > 500){
+        if (this.aHP > this.maxHP){
             this.aHP = 500
         }
-        if (this.dHP > 500){
+        if (this.dHP > this.maxHP){
             this.dHP = 500
         }
-        if (this.gHP > 500){
+        if (this.gHP > this.maxHP){
             this.gHP = 500
         }
         this.playerTurn = false
+    }
+
+    dMagic1(){
+
     }
 
     //dMagic2(){

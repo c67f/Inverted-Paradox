@@ -83,15 +83,15 @@ class Battle extends Phaser.Scene {
         this.aName.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
         this.dName.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
         //health numbers:
-        this.gHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+5, this.mainFont, this.gHP, 18).setOrigin(0)
-        this.aHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+35, this.mainFont, this.aHP, 18).setOrigin(0)
-        this.dHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+65, this.mainFont, this.dHP, 18).setOrigin(0)
+        this.gHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+5, this.mainFont, this.gHP, 24).setOrigin(0)
+        this.aHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+35, this.mainFont, this.aHP, 24).setOrigin(0)
+        this.dHPText = this.add.bitmapText(this.HPTextX + 200, this.HPTextY+65, this.mainFont, this.dHP, 24).setOrigin(0)
         this.gHPText.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
         this.aHPText.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
         this.dHPText.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
 
 
-        this.eHPText = this.add.bitmapText(900, 80, this.mainFont, this.enemy.HP, 24).setOrigin(0)
+        this.eHPText = this.add.bitmapText(900, 80, this.mainFont, this.enemy.HP, 36).setOrigin(0)
         //this.eHPText.setTintFill(0xffd000, 0xffd000, 0xffe262, 0xffe262)
         
         this.charMenuBox = new MenuBox(this, -500, 0, 'menuBox9Slice', 0, 180, 150, 5, 5, 5, 5).setOrigin(0)
@@ -233,8 +233,8 @@ class Battle extends Phaser.Scene {
     //}
 
     bananaPeel(){
-        let randNum = Phaser.Math.Between(1, 1)
-        if (randNum === 1){
+        let randNum = Phaser.Math.Between(1, 3)
+        if (randNum === 2){
             console.log('stunned!')
             this.enemy.stunned = true
         }
